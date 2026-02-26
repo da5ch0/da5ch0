@@ -18,7 +18,7 @@
 
 security researcher · systems thinker · mental health advocate · forbidden librarian
 
-370+ repos. most of them are exactly what they look like. some of them aren't.
+490+ repos. most of them are exactly what they look like. some of them aren't.
 
 ---
 
