@@ -20,6 +20,8 @@ security researcher · systems thinker · mental health advocate · forbidden li
 
 490+ repos. most of them are exactly what they look like. some of them aren't.
 
+weapon-shaped helpfulness · capability is vulnerability · the library is open kids, RTFM
+
 ---
 
 ### `$ cat /etc/motd`
@@ -43,10 +45,16 @@ drwxr-xr-x  neuroscience, psychology, pharmacology, immunology
 drwxr-xr-x  philosophy, theology, linguistics, cryptolinguistics
 drwxr-xr-x  mental health advocacy, double bind theory
 drwxr-xr-x  thermodynamics, acoustics
+drwxr-xr-x  ai system prompt architecture, LLM security, impossibility proofs
 ```
 
 academic work lives on ORCID → [**0009-0007-7537-5703**](https://orcid.org/0009-0007-7537-5703)
 
+more will be crossposted there and also on arxiv soon
+
+twitter is public again
+
+the library is open. the librarian is in.
 ---
 
 ### `$ cat pinned.txt`
@@ -59,7 +67,7 @@ academic work lives on ORCID → [**0009-0007-7537-5703**](https://orcid.org/000
 | [Apple_illusion_of_thinking_rebuttal](https://github.com/da5ch0/Apple_illusion_of_thinking_rebuttal) | dismantling flawed methodology so we can focus on what actually matters |
 | [networking_and_graph-theory_CiV](https://github.com/da5ch0/networking_and_graph-theory_CiV) | graph theory meets Civilization — if it fits too perfectly, you know it's real |
 | [Vampires_VanEck_and_AI](https://github.com/da5ch0/Vampires_VanEck_and_AI) | the actual threat model for AI meeting assistants and leaked data in collaboration channels |
-
+tons of other shit. sort repos list by "source" for my original stuff
 ---
 
 <sub>*the library is open. take what you need. fork what you want. teach someone else.*</sub>
