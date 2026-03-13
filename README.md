@@ -69,6 +69,7 @@ the library is open. the librarian is in.
 | [Vampires_VanEck_and_AI](https://github.com/da5ch0/Vampires_VanEck_and_AI) | the actual threat model for AI meeting assistants and leaked data in collaboration channels |
 tons of other shit. sort repos list by "source" for my original stuff
 ---
+| [Dash's Prompting Guide](https://github.com/da5ch0/How-to-master-prompting) | teach your LLM how you work, how it works, how you want it to behave/think, and THEN proceed. night and day difference tbh
 
 <sub>*the library is open. take what you need. fork what you want. teach someone else.*</sub>
 
