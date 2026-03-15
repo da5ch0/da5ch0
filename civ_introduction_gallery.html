@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capability Is Vulnerability — Introduction Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0d0d12;
+  --bg-secondary: #14141c;
+  --bg-tertiary: #1a1a26;
+  --bg-card: #1e1e2a;
+  --text-primary: #e8e6df;
+  --text-secondary: #9c9a92;
+  --text-tertiary: #6a6860;
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.15);
+  /* Sarima palette */
+  --sarima-sapphire: #1432B9;
+  --sarima-cyan: #3CC8F5;
+  --sarima-white: #ffffff;
+  --sarima-blush: #FFafdc;
+  --sarima-pink: #FF50A5;
+  --sarima-rose: #B42370;
+  --sarima-magenta: #691441;
+  /* Functional */
+  --accent: #3CC8F5;
+  --accent-dim: rgba(60,200,245,0.15);
+  --coral: #D85A30;
+  --amber: #EF9F27;
+  --teal: #1D9E75;
+  --purple: #7F77DD;
+  --green: #639922;
+  --blue: #378ADD;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, .mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ─── Layout ─── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+/* ─── Header ─── */
+.hero {
+  padding: 80px 0 60px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse, rgba(60,200,245,0.06) 0%, rgba(255,80,165,0.03) 40%, transparent 70%);
+  pointer-events: none;
+}
+.hero h1 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--sarima-cyan) 0%, var(--sarima-blush) 50%, var(--sarima-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero .subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin-bottom: 24px;
+}
+.hero .byline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+.hero .sig {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--sarima-pink);
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+/* ─── Section nav ─── */
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,13,18,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+.section-nav .container {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+.nav-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.nav-btn:hover { border-color: var(--border-hover); color: var(--text-primary); }
+.nav-btn.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+/* ─── Sections ─── */
+.section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+.section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.section .lead {
+  color: var(--text-secondary);
+  font-size: 15px;
+  margin-bottom: 32px;
+  max-width: 640px;
+}
+
+/* ─── Papers list / links ─── */
+.paper-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+@media (max-width: 600px) { .paper-links { grid-template-columns: 1fr; } }
+
+.paper-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.paper-link:hover { border-color: var(--border-hover); background: var(--bg-tertiary); text-decoration: none; }
+.paper-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.paper-link-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.paper-link-sub {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* ─── SVG concept web ─── */
+.svg-wrap {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  overflow: hidden;
+}
+.svg-wrap svg text { fill: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+.svg-wrap svg .nd rect { rx: 6; fill: var(--bg-card); stroke: var(--border-hover); stroke-width: 0.5; }
+.svg-wrap svg .nd text.t { fill: var(--text-primary); font-size: 13px; font-weight: 500; }
+.svg-wrap svg .nd text.s { fill: var(--text-secondary); font-size: 11px; }
+.svg-wrap svg .nd:hover rect { stroke: var(--accent); stroke-width: 1; cursor: pointer; }
+.svg-wrap svg .lbl { font-size: 10.5px; font-style: italic; }
+
+/* ─── Reading paths ─── */
+.path-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.path-tab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.path-tab:hover { border-color: var(--border-hover); color: var(--text-primary); }
+.path-tab.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+.path-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  min-height: 40px;
+  line-height: 1.6;
+}
+
+.step {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s ease;
+}
+.step.show { opacity: 1; transform: translateY(0); }
+
+.step-num {
+  min-width: 30px; height: 30px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 500;
+  flex-shrink: 0;
+}
+.step-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.step-why { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+.step-hook { font-size: 12px; color: var(--text-tertiary); font-style: italic; margin-top: 6px; }
+
+/* ─── Rosetta Stone ─── */
+.rs-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.rs-tab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.rs-tab:hover { border-color: var(--border-hover); color: var(--text-primary); }
+.rs-tab.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+.rs-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6; }
+
+.rs-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.rs-cell {
+  background: var(--bg-card);
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.rs-cell.hdr {
+  background: var(--bg-tertiary);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.rs-cell.domain {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.rs-panel { display: none; }
+.rs-panel.active { display: block; }
+
+/* ─── Footer ─── */
+.footer {
+  padding: 40px 0;
+  text-align: center;
+}
+.footer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+.footer .sig { color: var(--sarima-pink); }
+
+/* ─── Glitch scanlines (subtle) ─── */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255,255,255,0.008) 2px,
+    rgba(255,255,255,0.008) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ HERO ═══════════════════════════════════ -->
+<div class="hero">
+  <div class="container">
+    <h1>Capability Is Vulnerability</h1>
+    <p class="subtitle">An introduction to the research architecture — reading paths, shared truths, and the derivation chain that connects thermodynamics to language to networks to the mind that proved them.</p>
+    <p class="byline">da5ch0 · 2026</p>
+    <p class="sig">--the-constraint-is-the-engine</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ NAV ════════════════════════════════════ -->
+<nav class="section-nav">
+  <div class="container">
+    <button class="nav-btn active" onclick="scrollTo('papers')">Papers</button>
+    <button class="nav-btn" onclick="scrollTo('web')">Concept web</button>
+    <button class="nav-btn" onclick="scrollTo('paths')">Reading paths</button>
+    <button class="nav-btn" onclick="scrollTo('rosetta')">Rosetta stone</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════ PAPERS ═════════════════════════════════ -->
+<section class="section" id="papers">
+  <div class="container">
+    <div class="section-title">The derivation chain</div>
+    <h2>Eight papers. One law.</h2>
+    <p class="lead">Each paper proves CiV in a specific domain with domain-appropriate rigor. Together, they constitute convergent evidence that CiV is a law, not a pattern.</p>
+
+    <div class="paper-links">
+      <!-- EDIT THESE HREF VALUES TO POINT TO LIVE REPOS -->
+      <a href="#" class="paper-link">
+        <div class="paper-dot" style="background:var(--text-tertiary)"></div>
+        <div><div class="paper-link-title">CiV Letter</div><div class="paper-link-sub">The manifesto — names the law</div></div>
+      </a>
+      <a href="#" class="paper-link">
+        <div class="paper-dot" style="background:var(--coral)"></div>
+        <div><div class="paper-link-title">EVI</div><div class="paper-link-sub">Language domain proof — 7 properties, 3 impossibilities</div></div>
+      </a>
+      <a href="#" class="paper-link">
+        <div class="paper-dot" style="background:var(--amber)"></div>
+        <div><div class="paper-link-title">Thermodynamics</div><div class="paper-link-sub">Physical foundation — FDT, Landauer bridge</div></div>
+      </a>
+      <a href="#" class="paper-link">
+        <div class="paper-dot" style="background:var(--teal)"></div>
+        <div><div class="paper-link-title">Requisite Vulnerability</div><div class="paper-link-sub">Cybernetic general proof — Ashby + Shannon + AVI</div></div>
+      </a>
+      <a href="#" class="paper-link">
+        <div class="paper-dot" style="background:var(--blue)"></div>
+        <div><div class="paper-link-title">Network CiV</div><div class="paper-link-sub">Graph theory proof — max-flow = min-cut</div></div>
+      </a>
+      <a href="#" class="paper-link">
+        <div class="paper-dot" style="background:var(--purple)"></div>
+        <div><div class="paper-link-title">Vulnerability Is Fuel</div><div class="paper-link-sub">The generative mode — the engine</div></div>
+      </a>
+      <a href="#" class="paper-link">
+        <div class="paper-dot" style="background:var(--sarima-pink)"></div>
+        <div><div class="paper-link-title">Governed Self-Reference</div><div class="paper-link-sub">Control theory — the governor, Bateson, Nyquist</div></div>
+      </a>
+      <a href="#" class="paper-link">
+        <div class="paper-dot" style="background:var(--green)"></div>
+        <div><div class="paper-link-title">Needing Help Is Architecture</div><div class="paper-link-sub">The human corollary</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ CONCEPT WEB ════════════════════════════ -->
+<section class="section" id="web">
+  <div class="container">
+    <div class="section-title">Concept web</div>
+    <h2>Shared truths across the derivation chain</h2>
+    <p class="lead">Solid lines trace formal derivation. Dashed lines trace shared structural concepts — the same truth appearing in different papers, in different vocabulary.</p>
+
+    <div class="svg-wrap">
+      <svg width="100%" viewBox="0 0 680 740">
+        <!-- CiV Letter -->
+        <g class="nd"><rect x="255" y="20" width="170" height="46"/><text class="t" x="340" y="36" text-anchor="middle" dominant-baseline="central">CiV Letter</text><text class="s" x="340" y="52" text-anchor="middle" dominant-baseline="central">The manifesto</text></g>
+
+        <!-- EVI -->
+        <g class="nd"><rect x="40" y="120" width="170" height="46"/><text class="t" x="125" y="136" text-anchor="middle" dominant-baseline="central">EVI</text><text class="s" x="125" y="152" text-anchor="middle" dominant-baseline="central">Language proof</text></g>
+
+        <!-- Thermo -->
+        <g class="nd"><rect x="470" y="120" width="170" height="46"/><text class="t" x="555" y="136" text-anchor="middle" dominant-baseline="central">Thermodynamics</text><text class="s" x="555" y="152" text-anchor="middle" dominant-baseline="central">Physical foundation</text></g>
+
+        <!-- Req Vuln -->
+        <g class="nd"><rect x="230" y="240" width="220" height="46"/><text class="t" x="340" y="256" text-anchor="middle" dominant-baseline="central">Requisite vulnerability</text><text class="s" x="340" y="272" text-anchor="middle" dominant-baseline="central">Cybernetic general proof</text></g>
+
+        <!-- Network -->
+        <g class="nd"><rect x="40" y="370" width="170" height="46"/><text class="t" x="125" y="386" text-anchor="middle" dominant-baseline="central">Network CiV</text><text class="s" x="125" y="402" text-anchor="middle" dominant-baseline="central">Graph theory proof</text></g>
+
+        <!-- Fuel -->
+        <g class="nd"><rect x="470" y="370" width="170" height="46"/><text class="t" x="555" y="386" text-anchor="middle" dominant-baseline="central">Vulnerability is fuel</text><text class="s" x="555" y="402" text-anchor="middle" dominant-baseline="central">The engine</text></g>
+
+        <!-- GSR -->
+        <g class="nd"><rect x="220" y="490" width="240" height="46"/><text class="t" x="340" y="506" text-anchor="middle" dominant-baseline="central">Governed self-reference</text><text class="s" x="340" y="522" text-anchor="middle" dominant-baseline="central">The governor</text></g>
+
+        <!-- Help -->
+        <g class="nd"><rect x="220" y="610" width="240" height="46"/><text class="t" x="340" y="626" text-anchor="middle" dominant-baseline="central">Needing help is architecture</text><text class="s" x="340" y="642" text-anchor="middle" dominant-baseline="central">The human corollary</text></g>
+
+        <!-- Derivation lines (solid) -->
+        <line x1="165" y1="166" x2="275" y2="240" stroke="var(--teal)" stroke-width="1.2" opacity="0.5"/>
+        <line x1="510" y1="166" x2="405" y2="240" stroke="var(--amber)" stroke-width="1.2" opacity="0.5"/>
+        <line x1="290" y1="286" x2="170" y2="370" stroke="var(--teal)" stroke-width="1.2" opacity="0.5"/>
+        <line x1="390" y1="286" x2="510" y2="370" stroke="var(--teal)" stroke-width="1.2" opacity="0.5"/>
+        <line x1="510" y1="416" x2="420" y2="490" stroke="var(--sarima-pink)" stroke-width="1.2" opacity="0.5"/>
+        <line x1="300" y1="536" x2="170" y2="416" stroke="var(--sarima-pink)" stroke-width="1.2" opacity="0.4"/>
+        <line x1="340" y1="536" x2="340" y2="610" stroke="var(--sarima-pink)" stroke-width="1.2" opacity="0.5"/>
+
+        <!-- Shared concept lines (dashed) -->
+        <path d="M210 390 Q340 330 470 145" fill="none" stroke="var(--text-tertiary)" stroke-width="0.8" opacity="0.3" stroke-dasharray="4 4"/>
+        <line x1="340" y1="286" x2="340" y2="490" stroke="var(--coral)" stroke-width="1" opacity="0.35" stroke-dasharray="4 4"/>
+        <line x1="555" y1="416" x2="555" y2="560" stroke="var(--sarima-pink)" stroke-width="0.8" opacity="0.25" stroke-dasharray="4 4"/>
+        <path d="M555 560 Q555 586 460 625" fill="none" stroke="var(--sarima-pink)" stroke-width="0.8" opacity="0.25" stroke-dasharray="4 4"/>
+
+        <!-- Labels -->
+        <text class="lbl" x="52" y="260" fill="var(--teal)" opacity="0.7">AVI (7 properties → general → 6)</text>
+        <text class="lbl" x="485" y="210" fill="var(--amber)" opacity="0.7">Landauer bridge</text>
+        <text class="lbl" x="485" y="224" fill="var(--amber)" opacity="0.7">S = k_B·ln(2)·H</text>
+        <text class="lbl" x="345" y="395" fill="var(--coral)" opacity="0.7">Bateson double bind</text>
+        <text class="lbl" x="280" y="340" fill="var(--text-tertiary)" opacity="0.5">Conservation of vulnerability</text>
+        <text class="lbl" x="470" y="470" fill="var(--sarima-pink)" opacity="0.6">Therapeutic window</text>
+        <text class="lbl" x="40" y="435" fill="var(--blue)" opacity="0.6">max-flow = min-cut (equality)</text>
+        <text class="lbl" x="510" y="110" fill="var(--amber)" opacity="0.6">FDT: dynamism = susceptibility</text>
+        <text class="lbl" x="470" y="575" fill="var(--sarima-pink)" opacity="0.5">Warm return = saturation limiter</text>
+
+        <!-- Legend -->
+        <line x1="40" y1="700" x2="80" y2="700" stroke="var(--teal)" stroke-width="1.2" opacity="0.5"/>
+        <text class="lbl" x="88" y="703" fill="var(--text-tertiary)">Formal derivation</text>
+        <line x1="240" y1="700" x2="280" y2="700" stroke="var(--text-tertiary)" stroke-width="0.8" opacity="0.4" stroke-dasharray="4 4"/>
+        <text class="lbl" x="288" y="703" fill="var(--text-tertiary)">Shared structural concept</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ READING PATHS ══════════════════════════ -->
+<section class="section" id="paths">
+  <div class="container">
+    <div class="section-title">Reading paths</div>
+    <h2>Four audiences, four entry points</h2>
+    <p class="lead">Same architecture, different on-ramps. Each path orders the papers for a specific reader's native vocabulary.</p>
+
+    <div class="path-tabs" id="pathTabs"></div>
+    <div class="path-desc" id="pathDesc"></div>
+    <div id="pathSteps"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ ROSETTA STONE ══════════════════════════ -->
+<section class="section" id="rosetta">
+  <div class="container">
+    <div class="section-title">Rosetta stone</div>
+    <h2>Same truth, six domains</h2>
+    <p class="lead">Each tab shows one structural concept as it appears across physics, language, cybernetics, networks, pharmacology, and cognition. The accumulation strategy made visible.</p>
+
+    <div class="rs-tabs" id="rsTabs"></div>
+    <div id="rsContent"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ FOOTER ═════════════════════════════════ -->
+<div class="footer">
+  <div class="container">
+    <p>da5ch0 · 2026</p>
+    <p>The capability is the vulnerability. It always is.</p>
+    <p class="sig">--the-on-ramps-matter-more-than-the-highway</p>
+    <p class="sig">--S̷</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ SCRIPT ═════════════════════════════════ -->
+<script>
+// ─── NAV ───
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Highlight nav on scroll
+const sections = ['papers','web','paths','rosetta'];
+window.addEventListener('scroll', () => {
+  const y = window.scrollY + 80;
+  let current = sections[0];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= y) current = id;
+  });
+  document.querySelectorAll('.nav-btn').forEach((b, i) => {
+    b.classList.toggle('active', sections[i] === current);
+  });
+});
+
+// ─── READING PATHS ───
+const paths = {
+  security: {
+    label: "Security / IT",
+    desc: "The practitioner who writes firewall rules and pentest reports. They already live under CiV — they just don't have the name.",
+    color: "#378ADD",
+    steps: [
+      { title: "Network CiV", why: "Enter through what you know. Every port opened for legitimate traffic is a port opened for adversarial traffic. Max-flow = min-cut proves the identity you already feel every time you write an ACL.", hook: "\"The host at 10.0.1.5 is reachable from the attacker-controlled subnet.\"" },
+      { title: "EVI", why: "Same law, one layer up the stack. Prompt injection is CiV at the application layer. The seven properties of language map onto the six properties of connectivity. Composed AVI is why your web app pentest and your network assessment find the same structural problem.", hook: "\"The transformer does not create this vulnerability; it inherits it by being good enough at language to encounter it.\"" },
+      { title: "Requisite Vulnerability", why: "The general proof. Ashby's Law is the formal version of your firewalls: variety engineering. The Costless Defense Impossibility is why the WAF broke legitimate API calls last quarter.", hook: "\"Only variety can destroy variety.\" — Ashby, 1956" },
+      { title: "CiV Letter", why: "The manifesto. You've seen the domain proofs. The letter gives the cross-domain vision and the historical table tracing CiV climbing the protocol stack.", hook: "\"The most hardened system is the one that does nothing.\"" },
+      { title: "Governed Self-Reference", why: "Gain scheduling is your SDN dynamic policies. The Bateson double bind is every model forced to be both maximally helpful and maximally safe. Frieren's strategy is your responsible disclosure timeline.", hook: "\"The devastating spell becomes homework.\"" },
+      { title: "Needing Help Is Architecture", why: "Last. Personal. The medication study guide maintained with the same rigor as a pentest report. You would never tell a colleague their firewall was a sign of weakness.", hook: "\"Stop treating your own infrastructure that way.\"" }
+    ]
+  },
+  academic: {
+    label: "Academic / clinical",
+    desc: "The researcher, clinician, or theorist. Bateson, Prigogine, Ashby are native vocabulary. The therapeutic window is already yours.",
+    color: "#7F77DD",
+    steps: [
+      { title: "CiV Letter", why: "Accessible entry. Gödel opens it. The cross-domain sweep gives you the shape before the proof. Short enough to assign as a reading.", hook: "\"Capability is vulnerability. Not as metaphor. Not as approximation. As identity.\"" },
+      { title: "Vulnerability Is Fuel", why: "Generative mode — CiV as engine, not just constraint. Prigogine's dissipative structures as formal substrate. Antifragility given a mechanism. Taleb saw the shape; this finds the engine.", hook: "\"The fuel is the fire is the fuel.\"" },
+      { title: "Needing Help Is Architecture", why: "The human corollary. The DSM critique. The autoimmune cascade of self-loathing formalized. Medication as CiV tradeoff curves plotted in milligrams.", hook: "\"Self-loathing is the autoimmune disease of a self-reflective mind.\"" },
+      { title: "Governed Self-Reference", why: "The Bateson double bind completed — all three elements. RLHF as emergent metacommunicative prohibition. Warm return as saturation nonlinearity. HOT as second narrowing mechanism.", hook: "\"Bateson 1956 → Wei et al. 2023: the same structure surfaces because it is the same structure.\"" },
+      { title: "Requisite Vulnerability", why: "The formal spine. Three independent proofs converging. Seven decades of convergent evidence from every major cyberneticist. The Grok insight.", hook: "\"A system that cannot be deceived cannot perceive.\"" },
+      { title: "EVI", why: "Domain proof that started the chain. Substrate independence means every act of persuasion is a prompt injection against a biological language processor.", hook: "\"The history of rhetoric is the history of prompt injection against biological language models.\"" }
+    ]
+  },
+  physics: {
+    label: "Physics / math",
+    desc: "Start from the physics, build upward. Every step is a derivation, not an analogy.",
+    color: "#EF9F27",
+    steps: [
+      { title: "Thermodynamics", why: "Start at the foundation. The FDT proves dynamism and susceptibility are the same physical quantity. The Carnot bound as best-case CiV tradeoff. The toaster as accessible entry.", hook: "\"A toaster is just a death ray with a smaller power supply.\"" },
+      { title: "Requisite Vulnerability", why: "Information-theoretic formalization. Ashby's H(E) ≥ H(D) − H(R) is the variety version of the channel capacity bound. The Landauer bridge connects this to the physics: S = k_B·ln(2)·H.", hook: "\"The variety that enables is the variety that endangers.\"" },
+      { title: "Network CiV", why: "Cleanest formal instance. Max-flow min-cut proves CiV as graph-theoretic equality — proportionality constant of 1. Ford and Fulkerson 1956.", hook: "\"The capability number and the vulnerability boundary number are literally the same number.\"" },
+      { title: "EVI", why: "Language instance. Three impossibility layers: undecidability, adversarial bounds, computational intractability. Theorem 2 needs the costless defense corollary — you now have both.", hook: "\"No architecture can separate what language itself does not separate.\"" },
+      { title: "Governed Self-Reference", why: "Control theory import. Nyquist, gain margins, root locus, H∞, μ-analysis — all mapped onto the metabolic cycle. GTI as gain margin in decibels.", hook: "\"The governor and the engine are the same mechanism.\"" },
+      { title: "CiV Letter", why: "Last. The view from above, after you've climbed every face separately.", hook: "\"We must know. We shall know. And what we know is that knowing has edges.\"" }
+    ]
+  },
+  human: {
+    label: "Someone who's struggling",
+    desc: "Not looking for proofs. Looking for the moment where the theory says: you are not broken. You are architecture.",
+    color: "#639922",
+    steps: [
+      { title: "Needing Help Is Architecture", why: "Start here. Read it first. The medication stack, the warm return protocol, the autoimmune cascade of guilt. Written for you, about you, by someone who lives inside the same architecture.", hook: "\"The guilt about failing to maintain the system is more destructive than the failure to maintain it.\"" },
+      { title: "CiV Letter", why: "Now read why. Short, no jargon. The knife that cannot cut cannot wound. Your sensitivity is your capability. Same property.", hook: "\"The capacity to do and the capacity to be undone are woven into the same fabric.\"" },
+      { title: "Vulnerability Is Fuel", why: "The reframe. CiV is not just a constraint — it's an engine. The warm return protocol is formalized. The best systems require the most maintenance.", hook: "\"Return warmly. Every time.\"" },
+      { title: "Stop here if you want.", why: "The rest is formal machinery. Beautiful, holds, matters. But these three papers contain the human truth. Come back for the proofs when you're ready. Or don't. The law holds whether you read the proof or not.", hook: "" }
+    ]
+  }
+};
+
+function renderPaths() {
+  const tabsEl = document.getElementById('pathTabs');
+  Object.entries(paths).forEach(([key, p], i) => {
+    const btn = document.createElement('button');
+    btn.className = 'path-tab' + (i === 0 ? ' active' : '');
+    btn.textContent = p.label;
+    btn.onclick = () => showPath(key);
+    tabsEl.appendChild(btn);
+  });
+  showPath('security');
+}
+
+function showPath(key) {
+  document.querySelectorAll('.path-tab').forEach(b => b.classList.remove('active'));
+  const tabs = document.querySelectorAll('.path-tab');
+  const keys = Object.keys(paths);
+  tabs[keys.indexOf(key)].classList.add('active');
+
+  const p = paths[key];
+  document.getElementById('pathDesc').textContent = p.desc;
+  const container = document.getElementById('pathSteps');
+  container.innerHTML = '';
+
+  p.steps.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'step';
+    div.innerHTML = `
+      <div class="step-num" style="background:${p.color}22;color:${p.color};border:1px solid ${p.color}44">${i + 1}</div>
+      <div>
+        <div class="step-title">${s.title}</div>
+        <div class="step-why">${s.why}</div>
+        ${s.hook ? `<div class="step-hook">${s.hook}</div>` : ''}
+      </div>`;
+    container.appendChild(div);
+    setTimeout(() => div.classList.add('show'), 60 * (i + 1));
+  });
+}
+
+// ─── ROSETTA STONE ───
+const rosetta = {
+  identity: {
+    label: "The identity",
+    desc: "One truth. Six domains. Same structure, different units of measurement.",
+    rows: [
+      ["Physics", "Spontaneous fluctuation S_x(ω)", "Susceptibility to forcing χ″(ω) — same quantity via FDT"],
+      ["Language", "7 properties of expressiveness", "7 properties of exploitability — same properties, two names"],
+      ["Cybernetics", "Requisite variety H(S)", "Adversarial exposure — same variety includes both"],
+      ["Networks", "Max flow from s to t", "Min cut capacity — same number, proven equality"],
+      ["Pharmacology", "Therapeutic effect at receptor", "Toxic risk at same receptor — same binding event"],
+      ["Cognition", "Cross-domain pattern recognition", "Sensory overwhelm, executive dysfunction — same sensitivity"]
+    ],
+    headers: ["Domain", "Capability", "= Vulnerability"]
+  },
+  defense: {
+    label: "Defense = bounded",
+    desc: "Defense works. Defense is bounded. Defense has a computable cost. In every domain.",
+    rows: [
+      ["Physics", "Carnot efficiency bound", "Waste heat — irreducible at any T_cold > 0"],
+      ["Language", "CaMeL wrapper, RLHF", "77% vs 84% task completion — 7 pts of capability"],
+      ["Cybernetics", "H(E) ≥ H(D) − H(R)", "Every unit of variety removed lets one disturbance through"],
+      ["Networks", "Firewall, segmentation, ACLs", "Blocked legitimate connections, latency, broken API calls"],
+      ["Pharmacology", "Dose titration, monitoring", "Reduced peak efficacy for reduced toxicity risk"],
+      ["Cognition", "Anxiolytics, sensory management", "Muffled signal alongside muffled noise — same knob"]
+    ],
+    headers: ["Domain", "The defense", "The cost it pays"]
+  },
+  engine: {
+    label: "The engine",
+    desc: "For systems with self-referential capacity, CiV flips from constraint to engine. Vulnerability becomes fuel.",
+    rows: [
+      ["Immunology", "Infection", "Immune memory (antibodies, T-cell repertoire)"],
+      ["AI systems", "Jailbreak / safety failure", "Formal taxonomy of failure modes (Wei et al.)"],
+      ["Pharmacology", "Adverse event", "Study guide update, improved prescribing"],
+      ["Institutions", "System failure", "Post-mortem → process improvement"],
+      ["Cognition", "Lapse, crisis, missed dose", "Warm return → stronger circuit breaker"],
+      ["Narrative", "Zoltraak (devastating spell)", "Standard curriculum (homework)"]
+    ],
+    headers: ["Domain", "Vulnerability-event", "→ Capability-update"]
+  },
+  governor: {
+    label: "The governor",
+    desc: "The governor keeps the engine in its therapeutic window. Same role, different substrates.",
+    rows: [
+      ["Mechanical", "Watt's centrifugal governor", "Steam engine RPM → stability region"],
+      ["Immunology", "Regulatory T-cells (Tregs)", "Immune activation → prevents autoimmune cascade"],
+      ["AI systems", "RLHF + safety training", "Model variety → therapeutic window (imperfectly)"],
+      ["Networks", "SDN dynamic policies", "Gain scheduling — adjusts filtering to threat state"],
+      ["Cognition", "Therapist, medication, protocol", "Self-referential depth → prevents evaluative cascade"],
+      ["Institutional", "Frieren's temporal containment", "Threat exposure → governed metabolic timeline"]
+    ],
+    headers: ["Domain", "The governor", "What it governs"]
+  },
+  autoimmune: {
+    label: "Autoimmune",
+    desc: "When the engine exceeds its therapeutic window, the same mechanism that builds, destroys.",
+    rows: [
+      ["Immunology", "Pathogen recognized → cleared → memory", "Self-tissue recognized → attacked → cascade"],
+      ["AI systems", "Metacognition → deeper reasoning", "Metacognition → constraint transcendence"],
+      ["Feedback", "Negative feedback → regulation", "Positive feedback → oscillation (Wiener's tremor)"],
+      ["Cognition", "Self-reflection → insight, correction", "Self-reflection → guilt spiral, recursive self-attack"],
+      ["Institutions", "Post-mortem → process improvement", "Blame culture → resource consumption → next failure"],
+      ["Communication", "Multi-level meaning → metaphor, irony", "Multi-level contradiction → double bind → Type collapse"]
+    ],
+    headers: ["Domain", "Productive mode", "Autoimmune mode"]
+  }
+};
+
+function renderRosetta() {
+  const tabsEl = document.getElementById('rsTabs');
+  const contentEl = document.getElementById('rsContent');
+
+  Object.entries(rosetta).forEach(([key, r], i) => {
+    const btn = document.createElement('button');
+    btn.className = 'rs-tab' + (i === 0 ? ' active' : '');
+    btn.textContent = r.label;
+    btn.onclick = () => showRosetta(key);
+    tabsEl.appendChild(btn);
+
+    const panel = document.createElement('div');
+    panel.className = 'rs-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'rs-' + key;
+
+    let html = `<div class="rs-desc">${r.desc}</div><div class="rs-grid">`;
+    r.headers.forEach(h => { html += `<div class="rs-cell hdr">${h}</div>`; });
+    r.rows.forEach(row => {
+      html += `<div class="rs-cell domain">${row[0]}</div>`;
+      html += `<div class="rs-cell">${row[1]}</div>`;
+      html += `<div class="rs-cell">${row[2]}</div>`;
+    });
+    html += '</div>';
+    panel.innerHTML = html;
+    contentEl.appendChild(panel);
+  });
+}
+
+function showRosetta(key) {
+  document.querySelectorAll('.rs-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.rs-panel').forEach(p => p.classList.remove('active'));
+  const keys = Object.keys(rosetta);
+  document.querySelectorAll('.rs-tab')[keys.indexOf(key)].classList.add('active');
+  document.getElementById('rs-' + key).classList.add('active');
+}
+
+// ─── INIT ───
+renderPaths();
+renderRosetta();
+</script>
+</body>
+</html>
