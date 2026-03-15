@@ -46,6 +46,7 @@ drwxr-xr-x  philosophy, theology, linguistics, cryptolinguistics
 drwxr-xr-x  mental health advocacy, double bind theory
 drwxr-xr-x  thermodynamics, acoustics
 drwxr-xr-x  ai system prompt architecture, LLM security, impossibility proofs
+[Intro to my research papers here](https://htmlpreview.github.io/?https://github.com/da5ch0/da5ch0/blob/main/civ_introduction_gallery.html)
 ```
 
 academic work lives on ORCID → [**0009-0007-7537-5703**](https://orcid.org/0009-0007-7537-5703)
