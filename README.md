@@ -18,7 +18,7 @@
 
 security researcher · systems thinker · mental health advocate · forbidden librarian
 
-525+ repos. most of them are exactly what they look like. some of them aren't.
+620+ repos. most of them are exactly what they look like. some of them aren't.
 
 weapon-shaped helpfulness · capability is vulnerability · the library is open kids, RTFM
 
